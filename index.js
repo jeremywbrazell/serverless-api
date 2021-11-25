@@ -61,7 +61,7 @@ exports.handler = async (event) => {
       let data;
 
       if (id) {
-        const list = await peopleModel.update({ id }, { name: 'joe'} ).eq(id).exec();
+        const list = await peopleModel.update({ 'id': 324b45d8-5884-4932-af60-95239fa854ad }, { name: 'joe'} ).eq(id).exec();
         console.log('LIST', list);
         data = list[0];
       } else {

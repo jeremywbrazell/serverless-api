@@ -3,7 +3,7 @@
 const dynamoose = require('dynamoose');
 
 const peopleSchema = new dynamoose.Schema({
-    'id': String,
+    'id': Blob,
     'name': String,
     'phone': String,
 });
