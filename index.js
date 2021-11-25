@@ -53,23 +53,20 @@ exports.handler = async (event) => {
         response: err.message
       }
     }
-  }else if (event.httpMethod === 'PUT') {
+  } else if (event.httpMethod === 'PUT') {
     try {
-      // either there is or is not an id
+      const name = JSON.parse(event.body);
+
       const id = event.pathParameters && event.pathParameters.id;
 
-      let data;
+      let updatedPerson;
 
       if (id) {
-        const list = await peopleModel.update({ 'id': 324b45d8-5884-4932-af60-95239fa854ad }, { name: 'joe'} ).eq(id).exec();
-        console.log('LIST', list);
-        data = list[0];
-      } else {
-        data = await peopleModel.scan().exec();
+        updatedPerson = await peopleModel.update({ 'id': id }, { 'name': name});
       }
       return {
         statusCode: 200,
-        body: JSON.stringify(data),
+        body: `Name updated to ${JSON.stringify(updatedPerson.name)}`,
       }
 
     } catch (err) {
@@ -78,6 +75,28 @@ exports.handler = async (event) => {
         response: err.message
       }
     }
-  }
+  } else if (event.httpMethod === 'DELETE') {
+    try {
+      const name = JSON.parse(event.body);
+
+      const id = event.pathParameters && event.pathParameters.id;
+
+      let updatedPerson;
+
+      if (id) {
+        updatedPerson = await peopleModel.update({ 'id': id });
+      }
+      return {
+        statusCode: 200,
+        body: `Name deleted`,
+      }
+
+    } catch (err) {
+      return {
+        statusCode: 500,
+        response: err.message
+      }
+    }
+  } 
 
 };
